@@ -3,7 +3,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Movie from './Movie';
 
+import { useLoaderData } from 'react-router-dom';
+
 const Movies = () => {
+    // const moviesArr=useLoaderData();
+
     const [moviesArr, setMoviesArr] = useState([])
 
 
@@ -11,7 +15,7 @@ const Movies = () => {
         axios.get("http://localhost:3000/movies")
             .then((res) => {
                 setMoviesArr(res.data)
-                console.log(res.data);
+                // console.log(res.data);
             })
     }, [])
 

@@ -21,11 +21,11 @@ const StyledCardContent = styled(CardContent)(({ theme }) => ({
 
 export default function Movie(props) {
   const movie = props.movie;
-  const { id, overview, title , vote_average ,release_date } = movie;
+  const { id, title , vote_average ,release_date } = movie;
   const url = 'https://image.tmdb.org/t/p/w500/' + movie.backdrop_path;
   const navigate = useNavigate();
 
-  const handleShowMore = (event) => {
+  const handleShowMore = () => {
     navigate(`/movies/${id}`);
   };
 

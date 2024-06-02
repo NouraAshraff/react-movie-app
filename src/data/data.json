@@ -320,42 +320,6 @@
       "video": false,
       "vote_average": 5.682,
       "vote_count": 209
-    },
-    {
-      "id": "bf2b",
-      "title": "Ni",
-      "overview": "overviw",
-      "popularity": 0,
-      "vote_average": 0,
-      "release_date": "2024-05-30",
-      "backdrop_path": "https://image.tmdb.org/t/p/w500/ldfCF9RhR40mppkzmftxapaHeTo.jpg"
-    },
-    {
-      "id": "d4f2",
-      "title": "Noura",
-      "overview": "overviw",
-      "popularity": "2",
-      "vote_average": "4",
-      "release_date": "2024-05-30",
-      "backdrop_path": "https://image.tmdb.org/t/p/w500/ldfCF9RhR40mppkzmftxapaHeTo.jpg"
-    },
-    {
-      "id": "ca26",
-      "title": "Big",
-      "overview": "overviw",
-      "popularity": "2",
-      "vote_average": "4",
-      "release_date": "2024-05-30T12:50:21.613Z",
-      "backdrop_path": "https://image.tmdb.org/t/p/w500/ldfCF9RhR40mppkzmftxapaHeTo.jpg"
-    },
-    {
-      "id": "99b2",
-      "title": "dd",
-      "overview": "ddd",
-      "popularity": 0,
-      "vote_average": 0,
-      "release_date": "2024-05-30",
-      "backdrop_path": "https://image.tmdb.org/t/p/w500/ldfCF9RhR40mppkzmftxapaHeTo.jpg"
     }
   ]
 }

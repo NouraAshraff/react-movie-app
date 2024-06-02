@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import Home from "../pages/Home";
 import MoviesPage from "../pages/MoviesPage";
@@ -13,12 +13,60 @@ import UpdateMovie from "../components/UpdateMovie";
 import MoviesContextProvider from "../contexts/MoviesContextProvider";
 import { Suspense } from "react";
 import SimpleBackdrop from "../components/Spinner";
-
+import axios from "axios";
 function App() {
+
+  const fetchMovies = async()=>{
+    const res=await axios.get("http://localhost:3000/movies");
+    console.log("hi in fetch");
+    console.log(res.data);
+  return res.data
+  }
+  const router = createBrowserRouter([
+    {
+      path:'/',
+      element: <Home/>,
+      
+      errorElement: <NotFound/>,
+      children:[
+
+        {
+          index:true,
+          element: <MoviesPage/>,
+          loader:fetchMovies,
+        },
+        {
+          path: "/about",
+          element: <About></About>,
+        },
+        {
+          path: "/contact",
+          element: <Contact />,
+        },
+        {
+          path: "/movies/add",
+          element: <AddMovie />,
+        },
+        {
+          path: "movies/:id",
+          element: <MovieDetails />,
+        },
+        {
+          path: "movies/update/:id",
+          element: <UpdateMovie />,
+        },
+
+      ]
+
+    }
+  ]);
   return (
     <MoviesContextProvider>
       <Suspense fallback={<SimpleBackdrop />}>
-        <Router>
+        
+      <RouterProvider router={router}></RouterProvider>
+
+        {/* <Router>
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
@@ -30,7 +78,7 @@ function App() {
             <Route path="movies/update/:id" element={<UpdateMovie />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </Router>
+        </Router> */}
       </Suspense>
     </MoviesContextProvider>
   );

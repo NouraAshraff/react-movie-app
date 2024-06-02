@@ -6,18 +6,19 @@ import Movie from './Movie';
 import { useLoaderData } from 'react-router-dom';
 
 const Movies = () => {
-    // const moviesArr=useLoaderData();
+    const moviesArr=useLoaderData();
+  
 
-    const [moviesArr, setMoviesArr] = useState([])
+    // const [moviesArr, setMoviesArr] = useState([])
 
 
-    useEffect(() => {
-        axios.get("http://localhost:3000/movies")
-            .then((res) => {
-                setMoviesArr(res.data)
-                // console.log(res.data);
-            })
-    }, [])
+    // useEffect(() => {
+    //     axios.get("http://localhost:3000/movies")
+    //         .then((res) => {
+    //             setMoviesArr(res.data)
+    //             // console.log(res.data);
+    //         })
+    // }, [])
 
 
     console.log(moviesArr);

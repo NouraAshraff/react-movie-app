@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
+import { MoviesContext } from '../contexts/MoviesContextProvider';
 const MovieDetails = () => {
     const {id}=useParams()
-    const [movie , setmovie]=useState({});
-    console.log("the id is " +id);
+    let [movie , setmovie]=useState({});
+    
     const navigate = useNavigate();
 
+    const {moviesArr}= useContext(MoviesContext);
 
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/movies/${id}`)
-            .then((res) => {
-                console.log(res.data);
-                setmovie(res.data)
-            })
-    }, [])
+        setmovie(moviesArr.find((m)=>m.id === id));
+    }, [id, moviesArr])
+
+
 
         const baseURL = 'https://image.tmdb.org/t/p/w500/' + movie.backdrop_path;
 

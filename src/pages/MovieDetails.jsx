@@ -4,14 +4,17 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
-import { MoviesContext } from '../contexts/MoviesContextProvider';
+import {useDispatch, useSelector } from 'react-redux';
+import { deleteMovieAction } from '../redux/store/slices/moviesSlice';
 const MovieDetails = () => {
     const {id}=useParams()
+    const dispatch = useDispatch();
     let [movie , setmovie]=useState({});
     
     const navigate = useNavigate();
+    
 
-    const {moviesArr}= useContext(MoviesContext);
+    const moviesArr= useSelector((state)=>state.movies.movies)
 
 
     useEffect(() => {
@@ -52,14 +55,9 @@ const MovieDetails = () => {
         const handleDelete = async () => {
             let res = window.confirm("Are you sure you want to delete?");
             if (res) {
-                try {
-                    await axios.delete(`http://localhost:3000/movies/${id}`);
-                    navigate("/");
-                } catch (err) {
-                    console.error("Error deleting movie: ", err);
-                    alert("Failed to delete the movie.");
-                }
+                dispatch(deleteMovieAction(movie));
             }
+            navigate('/');
         }
         return (
 

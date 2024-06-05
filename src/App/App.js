@@ -7,24 +7,27 @@ import MovieDetails from "../pages/MovieDetails";
 import AddMovie from "../components/AddMovie";
 import Contact from "../pages/Contact";
 import UpdateMovie from "../components/UpdateMovie";
-import MoviesContextProvider from "../contexts/MoviesContextProvider";
 import { Suspense } from "react";
 import SimpleBackdrop from "../components/Spinner";
-import axios from "axios";
+import Favourits from "../components/Favourits";
+
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 import Movies from '../components/Movies';
+import { Provider } from 'react-redux';
 
-const fetchMovies = async () => {
-    const res = await axios.get("http://localhost:3000/movies");
-    return res.data;
-};
+import store from "../redux/store/store"
+import EmptyFavourite from '../components/EmptyFavourite';
+// const fetchMovies = async () => {
+//     const res = await axios.get("http://localhost:3000/movies");
+//     return res.data;
+// };
 
 const router = createBrowserRouter([
     {
         path: '/',
-        loader: fetchMovies,
-        element: <MoviesContextProvider><Home /></MoviesContextProvider>,
+        // loader: fetchMovies,
+        element: <Home />,
         errorElement: <NotFound />,
         children: [
             {
@@ -35,6 +38,10 @@ const router = createBrowserRouter([
             {
                 path: "/about",
                 element: <About />,
+            },
+            {
+                path: "/favourits",
+                element: <Favourits/>,
             },
             {
                 path: "/contact",
@@ -52,15 +59,21 @@ const router = createBrowserRouter([
                 path: "movies/update/:id",
                 element: <UpdateMovie />,
             },
+            {
+                path: "movies/emptyFav",
+                element: <EmptyFavourite/>,
+            },
         ],
     },
 ]);
 
 function App() {
     return (
-        <Suspense fallback={<SimpleBackdrop />}>
-            <RouterProvider router={router} />
-        </Suspense>
+        <Provider store={store}>
+            <Suspense fallback={<SimpleBackdrop />}>
+                <RouterProvider router={router} />
+            </Suspense>
+        </Provider>
     );
 }
 

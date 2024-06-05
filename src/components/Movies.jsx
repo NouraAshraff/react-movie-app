@@ -1,17 +1,28 @@
-import React, { useContext } from 'react';
-
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllMoviesAction } from '../redux/store/slices/moviesSlice';
 import Movie from './Movie';
-import { MoviesContext } from '../contexts/MoviesContextProvider';
+import SimpleBackdrop from './Spinner';
 
 const Movies = () => {
+  const moviesArr = useSelector((state) => state.movies.movies);
+  const dispatch = useDispatch();
 
-    const {moviesArr}= useContext(MoviesContext)
+  useEffect(() => {
+    dispatch(getAllMoviesAction());
+  }, [dispatch]);
 
-    return (
-        <div className='d-flex justify-content-around flex-wrap m-2 p-3'>
-            {moviesArr.map((m) => { return <Movie key={m.id} movie={m}></Movie> })}
-        </div>
-    );
+  if (!moviesArr) {
+    return <SimpleBackdrop />;
+  }
+
+  return (
+    <div className='d-flex justify-content-around flex-wrap m-3 p-3'>
+      {moviesArr.map((m) => (
+        <Movie key={m.id} movie={m} isFavourit={m.isFavourit} />
+      ))}
+    </div>
+  );
 }
 
 export default Movies;

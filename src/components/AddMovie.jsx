@@ -1,31 +1,23 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { addMovieAction } from "../redux/store/slices/moviesSlice";
 
 const AddMovie = () => {
-    const [movie, setMovie] = useState({ title: "", overview: "", popularity: 0, vote_average: 0, release_date: "" });
-    const [message, setMessage] = useState("");
+    const [movie, setMovie] = useState({ title: "", overview: "", popularity: 0, vote_average: 0, release_date: ""});
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    
 
     const handleSubmit = async (event) => {
 
-
         event.preventDefault();
+        movie.isFavourit =false ;
         movie.release_date = new Date().toISOString().split('T')[0];  // Ensure the date format is suitable for your backend
         movie.backdrop_path = 'https://image.tmdb.org/t/p/w500/ldfCF9RhR40mppkzmftxapaHeTo.jpg'; // Dummy path, adjust as needed
 
-        try {
-            const response = await axios.post("http://localhost:3000/movies", movie);
-            if (response.status === 201) {
-                setMessage("Movie added successfully!");
-                setMovie({ title: "", overview: "", popularity: 0, vote_average: 0, release_date: "" });
-                // navigate(`/`);
-
-            }
-        } catch (error) {
-            console.error("There was an error adding the movie!", error);
-            setMessage("Failed to add the movie.");
-        }
+        dispatch(addMovieAction(movie));
+        navigate(`/`);
     };
 
     const handleChange = (event) => {
@@ -37,9 +29,8 @@ const AddMovie = () => {
     }
 
     return (
-        <div className="container m-auto mb-3  mt-2 p-3 border rounded w-75 ">
+        <div className="container m-auto mb-3  mt-5 p-3 border rounded w-75 ">
             <h2 className="text-primary text-center"> Add Movie</h2>
-            {message && <p className="text-center text-success">{message}</p>}
             <form onSubmit={handleSubmit}>
                 <div className="form-group m-3 p-2 row">
                     <label className="w-25">Movie Name : </label>
@@ -57,7 +48,7 @@ const AddMovie = () => {
                     <label className="w-25">Movie Popularity : </label>
                     <input className="form-control w-50" type='number' name="popularity" value={movie.popularity} onChange={handleChange}></input>
                 </div>
-                <div className=" w-25 d-flex  m-auto ">
+                <div className=" w-50 d-flex  m-auto ">
                     <input className="btn btn-primary mx-auto p-2 w-25" type='submit' value="Add"></input>
                     <button className="btn btn-secondary mx-auto p-2 w-25" onClick={handleCancel}>Cancel</button>
 
